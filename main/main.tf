@@ -143,34 +143,34 @@ resource "null_resource" "provisioner" {
   }
 }
 
-# resource "azurerm_linux_virtual_machine" "client" {
-#     count = var.client_instance_number
-#     name = "client-${count.index}"
-#     location = var.location_name
-#     resource_group_name   = azurerm_resource_group.myterraformgroup.name
-#     network_interface_ids = [element(azurerm_network_interface.myterraformnic.*.id, count.index)]
-#     size                  = var.vm_size
+resource "azurerm_linux_virtual_machine" "client" {
+    count = var.client_instance_number
+    name = "client-${count.index}"
+    location = var.location_name
+    resource_group_name   = azurerm_resource_group.myterraformgroup.name
+    network_interface_ids = [element(azurerm_network_interface.myterraformnic.*.id, count.index)]
+    size                  = var.vm_size
 
-#     os_disk {
-#         name = "myOsDisk-${count.index}"
-#         caching = "ReadWrite"
-#         storage_account_type = "Premium_LRS"
-#     }
+    os_disk {
+        name = "myOsDisk-${count.index}"
+        caching = "ReadWrite"
+        storage_account_type = "Premium_LRS"
+    }
 
-#     source_image_reference {
-#         publisher = "Canonical"
-#         offer     = "UbuntuServer"
-#         sku       = "18.04-LTS"
-#         version   = "latest"
-#     }
+    source_image_reference {
+        publisher = "Canonical"
+        offer     = "UbuntuServer"
+        sku       = "18.04-LTS"
+        version   = "latest"
+    }
 
-#     computer_name  = "client-${count.index}"
-#     admin_username = var.username
-#     disable_password_authentication = true
+    computer_name  = "client-${count.index}"
+    admin_username = var.username
+    disable_password_authentication = true
 
-#     admin_ssh_key {
-#         username       = var.username
-#         public_key     = file("id_rsa.pub")
-#     }
-# }
+    admin_ssh_key {
+        username       = var.username
+        public_key     = file("id_rsa.pub")
+    }
+}
 

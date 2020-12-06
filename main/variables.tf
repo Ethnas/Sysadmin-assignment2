@@ -23,21 +23,25 @@ variable "subnet_address_prefixes" {
 variable "publicip_number" {
     type = number
     description = "The number of public ips you want"
+    #default = 3
 }
 
 variable "webserver_instance_number" {
     type = number
     description = "The number of webserver VM instances you want created"
+    #default = 2
 }
 
-# variable "client_instance_number" {
-#     type = number
-#     description = "The number of client VM instances you want created"
-# }
+variable "client_instance_number" {
+    type = number
+    description = "The number of client VM instances you want created"
+    #default = 1
+}
 
 variable "network_interface_number" {
     type = number
     description = "The number of network interfaces you want"
+    #default = 3
 }
 
 variable "vm_size" {
