@@ -35,7 +35,7 @@ variable "webserver_instance_number" {
 variable "client_instance_number" {
     type = number
     description = "The number of client VM instances you want created"
-    #default = 1
+    default = 1
 }
 
 variable "network_interface_number" {

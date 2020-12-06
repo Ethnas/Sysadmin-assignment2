@@ -123,32 +123,32 @@ resource "azurerm_linux_virtual_machine" "webserver" {
     }
 }
 
-resource "null_resource" "provisioner" {
-  count = var.webserver_instance_number
+# resource "null_resource" "provisioner" {
+#   count = var.webserver_instance_number
 
-  triggers = {
-    webserver_ids = element(azurerm_linux_virtual_machine.webserver.*.id, count.index)
-  }
+#   triggers = {
+#     webserver_ids = element(azurerm_linux_virtual_machine.webserver.*.id, count.index)
+#   }
 
-  #Run script for installing Apache web server
-    provisioner "remote-exec" {
-	    script = "..\\scripts\\apache.sh"
-	    connection {
-	      type = "ssh"
-        host = element(azurerm_linux_virtual_machine.webserver.*.public_ip_address, count.index)
-	      user = var.username
-	      timeout = "1m"
-	      private_key = file("id_rsa")
-	  }
-  }
-}
+#   #Run script for installing Apache web server
+#     provisioner "remote-exec" {
+# 	    script = "..\\scripts\\apache.sh"
+# 	    connection {
+# 	      type = "ssh"
+#         host = element(azurerm_linux_virtual_machine.webserver.*.public_ip_address, count.index)
+# 	      user = var.username
+# 	      timeout = "1m"
+# 	      private_key = file("id_rsa")
+# 	  }
+#   }
+# }
 
 resource "azurerm_linux_virtual_machine" "client" {
     count = var.client_instance_number
     name = "client-${count.index}"
     location = var.location_name
     resource_group_name   = azurerm_resource_group.myterraformgroup.name
-    network_interface_ids = [element(azurerm_network_interface.myterraformnic.*.id, count.index)]
+    network_interface_ids = [azurerm_network_interface.myterraformnic.2.id]
     size                  = var.vm_size
 
     os_disk {
